@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    
+    * {
+  box-sizing: border-box;
+}
+
+    h2 {
+      margin-top: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    input {
+      font-size: 16px;
+      padding: 8px;
+      width: 100%;
+      margin-top: 6px;
+    }
+
+    button {
+      font-size: 16px;
+      padding: 10px 16px;
+      margin-top: 20px;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal {
+      background: #fff;
+      width: 90%;
+      max-width: 420px;
+      padding: 16px;
+      border-radius: 8px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 180px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+
+    .note {
+      font-size: 14px;
+      color: #555;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>iOS Input Zoom Behavior Demo</h1>
+
+  <label>Main Page Input (16px — No Zoom Expected)</label>
+  <input type="text" placeholder="Tap here — page should NOT zoom" />
+
+  <button onclick="openModal()">Open 3DS-like Modal</button>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <h2>3DS Challenge Simulation</h2>
+
+      <label>Modal Input (16px — No Zoom Expected)</label>
+      <input type="text" placeholder="Tap here — no zoom" />
+
+      <p class="note">
+        Viewport is locked while modal is open
+      </p>
+
+      <label>Iframe Input (≈13px — Zoom Expected)</label>
+      <iframe srcdoc="
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              padding: 16px;
+            }
+            input {
+              font-size: 13px;
+              padding: 8px;
+              width: 100%;
+            }
+          </style>
+        </head>
+        <body>
+          <input type='text' placeholder='Tap here — zoom occurs' />
+        </body>
+        </html>
+      "></iframe>
+
+      <button onclick="closeModal()">Close Modal</button>
+    </div>
+  </div>
+
+  <script>
+    let originalViewport;
+
+    function openModal() {
+      const viewport = document.querySelector('meta[name="viewport"]');
+      originalViewport = viewport.content;
+
+      viewport.content =
+        'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+
+      document.getElementById('modalBackdrop').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.querySelector('meta[name="viewport"]').content = originalViewport;
+      document.getElementById('modalBackdrop').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
