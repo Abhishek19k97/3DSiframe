@@ -124,14 +124,14 @@
       const viewport = document.querySelector('meta[name="viewport"]');
       originalViewport = viewport.content;
 
-      viewport.content =
-        'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+      // viewport.content =
+      //   'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
 
       document.getElementById('modalBackdrop').style.display = 'flex';
     }
 
     function closeModal() {
-      document.querySelector('meta[name="viewport"]').content = originalViewport;
+      // document.querySelector('meta[name="viewport"]').content = originalViewport;
       document.getElementById('modalBackdrop').style.display = 'none';
     }
   </script>
